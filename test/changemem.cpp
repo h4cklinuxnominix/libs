@@ -1,5 +1,5 @@
-#include"mem.h"
-
+#include"../mem/mem.h"
+#include<iostream>
 
 int main(int argc, char**argv){
 	if(argc < 4){

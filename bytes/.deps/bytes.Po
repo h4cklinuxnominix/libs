@@ -1,0 +1,6 @@
+../bytes/bytes.o: ../bytes/bytes.cpp /usr/include/stdc-predef.h \
+ ../bytes/bytes.h
+
+/usr/include/stdc-predef.h:
+
+../bytes/bytes.h:

@@ -81,7 +81,7 @@ std::vector<mem_pars> parsing_memory(void){
 	if ( mem == nullptr) return false;
 	fseek(mem, par.beg, SEEK_SET);
 	char buf[par.end-par.beg];
-	fread(buf, sizeof(buf),1,mem );
+	if ( fread(buf, sizeof(buf),1,mem ) == -1) return false;
 //	std::cout << "Buffer: " << buf << std::endl;
 	const	char * in=strstrb(buf, what.c_str(),sizeof(buf));
 	if(in == nullptr){
