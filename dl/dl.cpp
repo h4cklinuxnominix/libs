@@ -6,7 +6,9 @@
 //#include<sys/ptrace.h>
 //#include<linux/user.h>
 #include"dl.h"
-
+#ifdef WITHOUT_DL 
+	#error "Can't for a while compile that without dl library"
+#endif
 namespace libraries{
 		std::map<std::string,void*> libraries;
 		dl& dl::operator+(dl & l){
