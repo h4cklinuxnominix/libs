@@ -1,3 +1,4 @@
+//TODO: Example of all
 #include<linux/user.h>
 #include<sys/ptrace.h>
 #include<unistd.h>
@@ -5,7 +6,7 @@
 //#include <sys/types.h>
 //#include <sys/stat.h>
 #include <fcntl.h>
-
+#pragma once
 #ifdef __cplusplus
 extern "C"{// not c++filt shit
 #endif
@@ -14,20 +15,22 @@ extern "C"{// not c++filt shit
 		long long ip; // instruction index
 	}syscall_hack;
 
-	#define eprintf(...) fprintf(stderr, __VA_LIST__)
+	#define eprintf(...) fprintf(stderr, __VA_ARGS__)
 	static bool * attached;
 //	static pid_t attached_pid;
 	int init_attached(void);
 
 	bool attach_me(void);
 	bool attach_pid(pid_t);
+	bool deattach(pid_t pid);
 
 	bool freeze(pid_t); // freeze
-	bool (*start_singlestep)(void)=(void*)&freeze;
+//	bool (*start_singlestep)(void)=(void*)&freeze;
 	syscall_hack getcall(pid_t );
-	bool (*unfreeze)(void) = (void*)&getcall;
+//	bool (*unfreeze)(void) = (void*)&getcall;
+	bool continue_prog(pid_t);
 
-
+	struct user_regs_struct getregs(pid_t pid);
 	bool putregs(pid_t,struct user_regs_struct,void *offset);
 	bool putcode(pid_t,void * offset, void * data); // put in .text
 	bool putdata(pid_t,void * offset, void * data); // put in .data

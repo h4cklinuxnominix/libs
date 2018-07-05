@@ -65,8 +65,8 @@ syscall_hack getcall(pid_t pid){
 	syscall_hack err={0,0};
 	INITED(err);
 	struct user_regs_struct regs;
-	if(ptrace(PTRACE_GETREGS,pid, 0, &regs) == -1){
-		perror("Can't getregs");
+	regs=getregs(pid);
+	if(regs.ax==0 && regs.ip==0) {
 		return err;
 	}
         syscall_hack ret={regs.ax,regs.ip};
@@ -85,11 +85,24 @@ bool putregs(pid_t pid,struct user_regs_struct regs,void *offset){
 
 bool putcode(pid_t pid, void * offset, void * data){
 	INITED(false);
-	return ptrace(PTRACE_PEEKTEXT,pid,offset,data) == -1;
+	return ptrace(PTRACE_PEEKTEXT,pid,&offset,&data) == -1;
 }
 
 bool putdata(pid_t pid, void * offset, void * data){
 	INITED(false);
-	return ptrace(PTRACE_PEEKDATA, pid, offset, data) == -1;
+	return ptrace(PTRACE_PEEKDATA, pid, &offset, &data) == -1;
+}
+bool continue_prog(pid_t pid){
+	INITED(false);
+	return ptrace(PTRACE_CONT,pid,0,0) == -1;
 }
 
+struct user_regs_struct getregs(pid_t pid){
+struct	user_regs_struct ret;
+	INITED(ret);
+	if(ptrace(PTRACE_GETREGS,pid,0,&ret) == -1){
+		perror("Get regs");
+		return ret;
+	}
+	return ret;
+}
