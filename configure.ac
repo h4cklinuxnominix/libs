@@ -5,9 +5,11 @@ AC_PREREQ([2.69])
 AC_INIT([hack-linux-no-minix_memory], [0.1], [gigoga367@gmail.com])
 #AC_CONFIG_SRCDIR([test/changemem.cpp])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
-AC_CONFIG_FILES([Makefile build/Makefile])
+AC_CONFIG_FILES([Makefile build_mem/Makefile build_dl/Makefile])
 AC_CONFIG_HEADERS([config.h])
 
+AC_CHECK_HEADERS([linux/user.h])
+AC_CHECK_LIB([dl],[dlsym],[],[CFLAGS+=" -DWITHOUT_DL "])
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC

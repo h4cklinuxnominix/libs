@@ -12,7 +12,7 @@ int main(int argc, char**argv){
 		auto lines = hack::mem::parsing_memory();
 		for(auto line : lines) {
 			if(line.type==hack::mem::type_mem::heap)
-				if(hack::mem::change_heap(line,argv[2], argv[3])) return 0;
+				if(hack::mem::change_heap(line, argv[2], argv[3])) return 0;
 		}//end for
 		return 1;
 		//std::cout << "End prog" << std::endl;
